@@ -9,6 +9,7 @@ void main(){
 	//linked list 3: multiple nodes
 	struct node *head2 = NULL;
 	insert_value(&head2, 16);
+	insert_value(&head2, 27);
 	insert_value(&head2, 1);
 	insert_value(&head2, 5);
 	insert_value(&head2, 5);
@@ -34,6 +35,7 @@ void main(){
 	delete_value(&head2, 1);
 	delete_value(&head2, 5);
 	delete_value(&head2, 16);
+	delete_value(&head2, 27);
 }
 
 void insert_value(struct node **head, int new_value){
@@ -56,6 +58,11 @@ void insert_value(struct node **head, int new_value){
 		}
 	}else{ //If there is more than one node in the list, searches the list for the correct place then inserts new node.
 		struct node *current_node = *head;
+		if(current_node->data >= new_value){
+			new->next = current_node;
+			*head = new;
+			return;
+		}
 		while(current_node->next != NULL){
 			if(current_node->next->data >= new_value){
 				break;
