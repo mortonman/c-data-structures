@@ -37,13 +37,15 @@ void main(){
 }
 
 void insert_value(struct node **head, int new_value){
+	//allocating memory for new node.
 	struct node *new = (struct node*)malloc(sizeof(struct node));
+	//set node data to new value. 
 	new->data = new_value;
 	new->next = NULL;
-	if(*head == NULL){
+	if(*head == NULL){ //If there are no nodes in the linked list, adds the new node as the head.
 		*head = new;
 		return;
-	}else if((*head)->next == NULL){
+	}else if((*head)->next == NULL){ //If there is one node in the list, adds the new node before or after the existing node depending on the nodes' data values.
 		if((*head)->data > new_value){
 			new->next = *head;
     			*head = new;
@@ -52,7 +54,7 @@ void insert_value(struct node **head, int new_value){
 			(*head)->next = new;
 			return;
 		}
-	}else{
+	}else{ //If there is more than one node in the list, searches the list for the correct place then inserts new node.
 		struct node *current_node = *head;
 		while(current_node->next != NULL){
 			if(current_node->next->data >= new_value){
@@ -69,34 +71,36 @@ void insert_value(struct node **head, int new_value){
 			return;
 		}
 	}
+	return;
 }		
 
 void delete_value(struct node **head, int target_value){
-	if(*head == NULL){
+	if(*head == NULL){ //Returns if there are no nodes in the list.
 		return;
-	}else if((*head)->next == NULL && (*head)->data == target_value){
+	}else if((*head)->next == NULL && (*head)->data == target_value){ //Deletes node if there is one node in the list and its data value is the target_value.
 		free(*head);
 		*head = NULL;
 		return;
 	}else{
 		struct node *current_node = *head;
-		if(current_node->data == target_value){
+		if(current_node->data == target_value){ //Deletes current_node if its data value matches the target_value.
 			*head = current_node->next;
 			free(current_node);
 			return;
 		}
-		while(current_node->next != NULL && current_node->next->data != target_value){ //Looks for the node with the target_value
+		while(current_node->next != NULL && current_node->next->data != target_value){ //Looks for the node with the target_value, stops at the ende of the list if the target is not found.
 			current_node = current_node->next;
 		}
-		if(current_node->next == NULL){
+		if(current_node->next == NULL){ //returns if all nodes have been searched and target value was not found.
 			return;
-		}else{
+		}else{ // delets the next node if its datat value matches the target_value.
 			struct node *target_node = current_node->next;
 			current_node->next = current_node->next->next;
 			free(target_node);
 			return;
 		}
 	}
+	return;
 }
 
 void print_list(struct node *head){
