@@ -8,8 +8,8 @@ void main(){
 	insert_value(&head1, 5);
 	//linked list 3: multiple nodes
 	struct node *head2 = NULL;
-	insert_value(&head2, 16);
 	insert_value(&head2, 27);
+	insert_value(&head2, 16);
 	insert_value(&head2, 1);
 	insert_value(&head2, 5);
 	insert_value(&head2, 5);
@@ -47,15 +47,6 @@ void insert_value(struct node **head, int new_value){
 	if(*head == NULL){ //If there are no nodes in the linked list, adds the new node as the head.
 		*head = new;
 		return;
-	}else if((*head)->next == NULL){ //If there is one node in the list, adds the new node before or after the existing node depending on the nodes' data values.
-		if((*head)->data > new_value){
-			new->next = *head;
-    			*head = new;
-			return;
-		}else{
-			(*head)->next = new;
-			return;
-		}
 	}else{ //If there is more than one node in the list, searches the list for the correct place then inserts new node.
 		struct node *current_node = *head;
 		if(current_node->data >= new_value){
