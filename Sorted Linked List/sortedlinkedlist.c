@@ -32,8 +32,8 @@ void main(){
 	printf("List 3:\n");
 	print_list(head2);	
 	delete_value(&head2, 1);
+	delete_value(&head2, 5);
 	delete_value(&head2, 16);
-	delete_value(&head, 5);
 }
 
 void insert_value(struct node **head, int new_value){
@@ -80,7 +80,12 @@ void delete_value(struct node **head, int target_value){
 		return;
 	}else{
 		struct node *current_node = *head;
-		while(current_node->next != NULL && current_node->next->data != target_value){
+		if(current_node->data == target_value){
+			*head = current_node->next;
+			free(current_node);
+			return;
+		}
+		while(current_node->next != NULL && current_node->next->data != target_value){ //Looks for the node with the target_value
 			current_node = current_node->next;
 		}
 		if(current_node->next == NULL){
