@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 struct node{
-	int value;
+	int data;
 	struct node *right;
 	struct node *left;
 };
@@ -30,7 +30,7 @@ bool move_left(struct node **current_node){
 void insert_value(struct node **head, int new_value){
 	//declare new node and allocate memory
 	struct node *new_node = (struct node *)malloc(sizeof(struct node));
-	new_node->value = new_value;
+	new_node->data = new_value;
 	new_node->right, new_node->left = NULL;
 
 	//if there are no nodes in the tree, the new node becomes the first node
@@ -43,16 +43,16 @@ void insert_value(struct node **head, int new_value){
 
 	//if there is at least one node in the tree, searches the tree for the correct location to put the new node in, then puts the node there
 	while(current_node->right != new_node && current_node->left != new_node){
-		if(new_value < current_node->value){ 
+		if(new_value < current_node->data){ 
 			if(move_left(&current_node) == false){
 				current_node->left = new_node;
 			}
-		}else if(new_value > current_node->value){
+		}else if(new_value > current_node->data){
 			if(move_right(&current_node) == false){
 				current_node->right = new_node;
 			}
 		}else{ //In the case of a duplicate value
-			printf("Unable to find a location for the new value.");
+			printf("Unable to find a location for the new value: %i.This value is already present in this tree.\n", new_value);
 			return;
 		}	
 	}
@@ -64,6 +64,7 @@ void main(){
 	insert_value(&tree, 16);
 	insert_value(&tree, 4);
 	insert_value(&tree, 20);
+	insert_value(&tree, 17);
 	insert_value(&tree, 17);
 }
 
