@@ -52,6 +52,7 @@ void insert_value(struct node **head, int new_value){
 				current_node->right = new_node;
 			}
 		}else{ //In the case of a duplicate value
+			free(new_node);
 			printf("Unable to find a location for the new value: %i.This value is already present in this tree.\n", new_value);
 			return;
 		}	
