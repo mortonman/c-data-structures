@@ -33,7 +33,8 @@ void insert_value(struct node **head, int new_value){
 	struct node *new_node = (struct node *)malloc(sizeof(struct node));
 	new_node->data = new_value;
 	new_node->count = 1;
-	new_node->right, new_node->left = NULL;
+	new_node->right = NULL;
+	new_node->left = NULL;
 
 	//if there are no nodes in the tree, the new node becomes the first node
 	if(!(*head)){
@@ -90,7 +91,9 @@ void delete_value(struct node **head, int target_value){
 			parent_node->right = NULL;
 		}else if(parent_node != NULL){
 			parent_node->left = NULL;
-		}
+		}else if(current_node = *head){
+			*head = NULL;
+		}	
 		free(current_node);
 		return;
 	}
@@ -100,6 +103,8 @@ void delete_value(struct node **head, int target_value){
 			parent_node->right = current_node->right;
 		}else if(parent_node != NULL){
 			parent_node->left = current_node->right;
+		}else if(current_node == *head){
+			*head = current_node->right;
 		}
 		free(current_node);
 		return;
@@ -110,19 +115,23 @@ void delete_value(struct node **head, int target_value){
 			parent_node->right = current_node->left;
 		}else if(parent_node != NULL){
 			parent_node->left = current_node->left;
+		}else if(current_node == *head){
+			*head =current_node->left;
 		}
+
 		free(current_node);
 		return;
 	}
 	//if the current node has two child nodes
 	if(current_node->left != NULL && current_node != NULL){
+		parent_node = current_node;
 		struct node *probe = current_node->right;
 		//finds the leftmost node.
 		while(probe->left != NULL){
 			parent_node = probe;
 			probe = probe->left;
 		}
-		current_node->data == probe->data;
+		current_node->data = probe->data;
 		if(probe->right != NULL){
 			if(parent_node != NULL && parent_node->right == probe){
 				parent_node->right = probe->right;
@@ -144,6 +153,7 @@ void delete_value(struct node **head, int target_value){
 
 }
 
+//print_tree() code provided by https://github.com/matoro
 void print_tree(struct node *bst, int indent)
 {
     for(int i = 0; i < indent; i++)
@@ -162,25 +172,17 @@ void print_tree(struct node *bst, int indent)
 }
 
 void main(){
+	//testing for memory leaks with 1000 random values.
 	srand(time(NULL));
-	int values[20];
+	int values[1000];
 	struct node *head = NULL;
-	for(int i = 0; i < 20; i++)
+	for(int i = 0; i < 1000; i++)
 	{
-		if(head != NULL){
-			print_tree(head, 0);
-		}
-		printf("\n\n---------------------\n");
 	    values[i] = rand() % 100;
 	    insert_value(&head, values[i]);
 	}
-	printf("deleting values:");
-	for(int i = 0; i < 20; i++)
+	for(int i = 0; i < 1000; i++)
 	{
-		if(head!=NULL){
-		print_tree(head, 0);
-		}
-		printf("\n\n-----------------------\n");
 		delete_value(&head, values[i]);
 	}
 }
