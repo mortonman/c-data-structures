@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 struct node{
+	int count;
 	int data;
 	struct node *right;
 	struct node *left;
@@ -25,7 +26,6 @@ bool move_left(struct node **current_node){
 	}
 	return false;
 }
-
               
 void insert_value(struct node **head, int new_value){
 	//declare new node and allocate memory
@@ -51,9 +51,9 @@ void insert_value(struct node **head, int new_value){
 			if(move_right(&current_node) == false){
 				current_node->right = new_node;
 			}
-		}else{ //In the case of a duplicate value
+		}else{ //In the case of a duplicate valuetures
+			current_node->count++;
 			free(new_node);
-			printf("Unable to find a location for the new value: %i.This value is already present in this tree.\n", new_value);
 			return;
 		}	
 	}
@@ -68,4 +68,3 @@ void main(){
 	insert_value(&tree, 17);
 	insert_value(&tree, 17);
 }
-
