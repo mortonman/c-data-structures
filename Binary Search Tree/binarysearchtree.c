@@ -31,6 +31,7 @@ void insert_value(struct node **head, int new_value){
 	//declare new node and allocate memory
 	struct node *new_node = (struct node *)malloc(sizeof(struct node));
 	new_node->data = new_value;
+	new_node->count = 1;
 	new_node->right, new_node->left = NULL;
 
 	//if there are no nodes in the tree, the new node becomes the first node
