@@ -47,11 +47,11 @@ void insert_value(struct node **head, int new_value){
 	//if there is at least one node in the tree, searches the tree for the correct location to put the new node in, then puts the node there
 	while(current_node->right != new_node && current_node->left != new_node){
 		if(new_value < current_node->data){ 
-			if(move_left(&current_node) == false){
+			if(!(move_left(&current_node))){
 				current_node->left = new_node;
 			}
 		}else if(new_value > current_node->data){
-			if(move_right(&current_node) == false){
+			if(!(move_right(&current_node))){
 				current_node->right = new_node;
 			}
 		}else{ //In the case of a duplicate values
