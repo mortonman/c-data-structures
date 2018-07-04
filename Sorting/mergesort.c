@@ -14,26 +14,48 @@ void main(){
 	}
 	int *iArr2 = (int *)malloc(sizeof(int)*6);// test with 4 element array
 	for(int i = 0; i < 6; i++){
-		iArr2[i] = rand()%100-50;//5 random numbers from -50 to 50
+		iArr2[i] = 11;//6 random numbers from -50 to 50
 	}
 	int *fArr = mergeSort(iArr, 5);
 	int *fArr2 = mergeSort(iArr2, 6);
+
+	int *iArr3 = (int *)malloc(sizeof(int));
+	*iArr3 = 5;
+	int *fArr3 = mergeSort(iArr3, 1);
+	int *iArr4 = NULL;
+	int *fArr4 = mergeSort(iArr4, 0);
 	printf("===== TEST 1 WITH 5 ELEMENT ARRAY =====\n");
-	printf("Before sorting, this array contains 5 integers in the following order: [%i, %i, %i, %i, %i]\n", *iArr, *(iArr+1), *(iArr+2), *(iArr+3), *(iArr+4));
-	printf("After sorting, this array contains 5 integers in the following order: [%i, %i, %i, %i, %i]\n", *fArr, *(fArr+1), *(fArr+2), *(fArr+3), *(fArr+4));
-	printf("===== TEST 2 WITH 6 ELEMENT ARRAY =====\n");
-	printf("Before sorting, this array contains 6 integers in the following order: [%i, %i, %i, %i , %i, %i]\n", *iArr2, *(iArr2+1), *(iArr2+2), *(iArr2+3),
-		*(iArr2+4),*(iArr2+5));
-	printf("After sorting, this array contains 6 integers in the following order: [%i, %i, %i, %i , %i, %i]\n", *fArr2, *(fArr2+1), *(fArr2+2), *(fArr2+3),
-		*(fArr2+4),*(fArr2+5));	
+	printf("Before sorting:[%i, %i, %i, %i, %i]\n", *iArr, *(iArr+1), *(iArr+2), *(iArr+3), *(iArr+4));
+	printf("After sorting:[%i, %i, %i, %i, %i]\n", *fArr, *(fArr+1), *(fArr+2), *(fArr+3), *(fArr+4));
+	printf("===== TEST 2 WITH 6 ELEMENT ARRAY OF THE SAME VALUE =====\n");
+	printf("Before sorting: [%i, %i, %i, %i , %i, %i]\n", 
+		*iArr2, *(iArr2+1), *(iArr2+2), *(iArr2+3), *(iArr2+4),*(iArr2+5));
+	printf("After sorting: [%i, %i, %i, %i , %i, %i]\n", 
+		*fArr2, *(fArr2+1), *(fArr2+2), *(fArr2+3), *(fArr2+4),*(fArr2+5));	
+	printf("===== TEST 3 WITH 1 ELEMENT ARRAY =====\n");
+	printf("Before sorting: [%i] \n After sorting: [%i]\n", *iArr3, *fArr3);
+	printf("===== TEST 4 WITH EMPTY ARRAY =====\n");
+	printf("Before sorting: []\n");
+	if(fArr4 == NULL){
+		printf("After sorting: []\n");
+	}else{
+		printf("Something went wrong, the final array is not empty.\n");
+	}
 	free(iArr);
 	free(iArr2);
+	free(iArr3);
 	free(fArr);
 	free(fArr2);
+	free(fArr3);
 }
 
 int * mergeSort(int *arr, int length) {
+	if(!arr || length == 0) return NULL;
 	int *tmp = (int*)malloc(sizeof(int) * length);
+	if(length == 1){
+		*tmp = *arr;
+		return tmp;
+	}
 	doMergeSort(arr, tmp, 0, length - 1); 
 	return tmp;
 }
